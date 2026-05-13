@@ -4,31 +4,32 @@
   $siteName  = "Book Library";
   $pageTitle = "Profile";
 
-  $secretKey = "my_book_library_secret_123";
-
+  // Security: If no token exists in session, kick user to login
   if (!isset($_SESSION["token"])) {
     session_write_close();
     header("Location: login.php");
     exit();
   }
 
+  // Verify the JWT token using our secret key
   $userData = verifyJWT($_SESSION["token"], JWT_SECRET);
 
+  // If token is invalid or expired, clear session and kick to login
   if ($userData === null) {
     session_destroy();
     header("Location: login.php");
     exit();
   }
-  ?>
+?>
 
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8">
   <title><?php echo $pageTitle; ?> - <?php echo $siteName; ?></title>
   <?php echo get_styles(); ?>
-  </head>
-  <body>
+</head>
+<body>
 
   <div class="container">
     <h1>📚 <?php echo $siteName; ?></h1>
@@ -62,5 +63,5 @@
     </footer>
   </div>
 
-  </body>
-  </html>
+</body>
+</html>
