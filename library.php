@@ -8,14 +8,18 @@ function countBooks($books) {
   return count($books);
 }
 
-// Function 2: if-elseif-else
+// Function 2: Updated if-elseif-else for better length categorization
 function getBookLength($pages) {
-  if ($pages < 200) {
-    return "Short book";
-  } elseif ($pages < 400) {
-    return "Medium book";
+  if ($pages <= 0) {
+    return "Invalid length";
+  } elseif ($pages < 150) {
+    return "Short (Quick Read)";
+  } elseif ($pages < 350) {
+    return "Medium (Standard)";
+  } elseif ($pages < 550) {
+    return "Long (Full Novel)";
   } else {
-    return "Long book";
+    return "Epic (Tome)";
   }
 }
 

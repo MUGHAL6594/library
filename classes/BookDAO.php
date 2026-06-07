@@ -25,8 +25,30 @@ class BookDAO extends BaseDAO {
   }
 
   public function search($keyword) {
-    $stmt = $this->db->prepare("SELECT * FROM books WHERE title LIKE ? OR author LIKE ?");
-    $stmt->execute(["%$keyword%", "%$keyword%"]);
+    // Split keywords by space to handle multiple terms like "Dark 1984"
+    $terms = explode(" ", $keyword);
+    $query = "SELECT * FROM books WHERE ";
+    $params = [];
+    $conditions = [];
+
+    foreach ($terms as $term) {
+        if (trim($term) === "") continue;
+        $conditions[] = "(title LIKE ? OR author LIKE ? OR genre LIKE ? OR description LIKE ?)";
+        $params[] = "%$term%";
+        $params[] = "%$term%";
+        $params[] = "%$term%";
+        $params[] = "%$term%";
+    }
+
+    if (empty($conditions)) {
+        return $this->getAll();
+    }
+
+    $query .= implode(" AND ", $conditions);
+    
+    $stmt = $this->db->prepare($query);
+    $stmt->execute($params);
+    
     $books = [];
     while ($row = $stmt->fetch()) {
       $books[] = new Book(

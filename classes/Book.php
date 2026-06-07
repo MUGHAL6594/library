@@ -32,4 +32,9 @@ class Book {
   public function getDescription() { return $this->description; }
   public function getAvailable() { return $this->available; }
   public function getCoverImage() { return $this->coverImage; }
+
+  // Additional Method: Concatenation example
+  public function getDisplayInfo() {
+    return $this->title . " by " . $this->author . " (" . $this->genre . ")";
+  }
 }

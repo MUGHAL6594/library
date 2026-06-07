@@ -81,7 +81,7 @@
             <?php endif; ?>
             <h3>
               <?php echo getGenreIcon($book->getGenre()); ?> 
-              <?php echo htmlspecialchars($book->getTitle()); ?>
+              <?php echo htmlspecialchars($book->getDisplayInfo()); ?>
             </h3>
             <div>
               <strong>Author:</strong> <?php echo htmlspecialchars($book->getAuthor()); ?><br>

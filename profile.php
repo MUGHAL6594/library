@@ -37,6 +37,12 @@
 
     <div class="card">
       <h2>👤 My Profile</h2>
+      <p class="success-msg">
+        <?php 
+          // Demonstrating concatenation requirement
+          echo "Welcome back, " . htmlspecialchars($userData["name"]) . "! You are logged in as " . htmlspecialchars($userData["role"]) . ".";
+        ?>
+      </p>
 
       <div class="profile-info">
         <p>Name: <strong><?php echo htmlspecialchars($userData["name"]); ?></strong></p>
